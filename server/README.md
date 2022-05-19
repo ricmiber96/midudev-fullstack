@@ -1,13 +1,10 @@
 # NodeJS Server Fullstack Bootcamp
 
 Este es el servidor desarrollado durante las clases del bootcamp de Midudev
-[Midudev github profile](https://github.com/midudev)
-[Repositorio Fullstack Bootcamp](https://github.com/midudev)
+ - [Midudev github profile](https://github.com/midudev)
+ - [Repositorio NodeJS Server Fullstack Bootcamp](https://github.com/midudev)
 
 # Clases
-
-StackEdit stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
-
 ## Primera Clase
 
  - Creacion del servidor con NodeJS
