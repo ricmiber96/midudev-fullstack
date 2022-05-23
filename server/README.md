@@ -1,6 +1,6 @@
 # NodeJS Server Fullstack Bootcamp
 
-Este es el servidor desarrollado durante las clases del bootcamp de Midudev
+Este es el servidor desarrollado durante las clases del bootcamp fullstack de Midudev
  - [Midudev github profile](https://github.com/midudev)
  - [Repositorio NodeJS Server Fullstack Bootcamp](https://github.com/midudev)
 
@@ -38,5 +38,37 @@ Este es el servidor desarrollado durante las clases del bootcamp de Midudev
     ```
     *(Deploy desde otra rama que no sea main)
     ```
-    git push heroku nombrerama:main
+    git push heroku nombre_rama:main
     ```
+## Tercera Clase
+[Link Video](https://www.youtube.com/watch?v=HsYA3QvWGlk&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=8)
+ - Creación del clueter en MongoDB Atlas
+ - Conexion a la base de datos con el cliente Robo 3T
+ - Creacion de una base de datos de ejemplo
+
+    ```
+    use mydatabase
+    db.createCollection('posts')
+    db.posts.insert({
+        id: 2,
+        name: "First Post",
+        img: "http://instagram.com",
+        likes: [{
+            @joe: 1,
+            @doe: 1,
+        }],
+        user:"midudev"
+    })
+    db.posts.find({})
+    db.posts.find({user: "midudev"})
+    ```
+ - Ejemplo de actualizacion de un documento con set
+    ```
+    db.post.update({user: "midudev"},{
+        $set: {
+            name: 'Este es el primer post'
+        }
+    })
+    ```
+# Aprendiendo Mongoose
+[Link Video](https://www.youtube.com/watch?v=vhUw7GkRHdk&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=9)
