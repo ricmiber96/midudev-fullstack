@@ -11,3 +11,13 @@ Este es el servidor desarrollado durante las clases del bootcamp de Midudev
  - Instalacion de librerias (Express y Nodemon)
  - Creacion de nuestras primeras rutas dentro del servidor
  - Documentacion de nuestra API en Postman
+## Segunda Clase
+[Link Video](https://www.youtube.com/watch?v=o85OkeVtm7k&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=7)
+ - Instalacion de Eslint en el proyecto
+ ```
+ npm install Eslint -D
+ AND
+ npm init @eslint/config
+ ```
+ - Creación de Middlewares
+ - Deploy Api en Heroku con Heroku CLI
