@@ -30,3 +30,13 @@ Este es el servidor desarrollado durante las clases del bootcamp de Midudev
     ```
     heroku create --region eu nombre-app
     ```
+    * Si existe la aplicacion añadir la rama heroku para hacer el deploy
+    ```
+    heroku git:remote -a salty-depths-78774
+    &&
+    git push heroku main
+    ```
+    *(Deploy desde otra rama que no sea main)
+    ```
+    git push heroku nombrerama:main
+    ```
