@@ -12,7 +12,7 @@ Este es el servidor desarrollado durante las clases del bootcamp de Midudev
  - Creacion de nuestras primeras rutas dentro del servidor
  - Documentacion de nuestra API en Postman
 ## Segunda Clase
-[Link Video](https://www.youtube.com/watch?v=o85OkeVtm7k&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=7)
+[Link Video](https://www.youtube.com/watch?v=ep_plUeKV1Y&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=10)
  - Instalacion de Eslint en el proyecto
  ```
  npm install Eslint -D
@@ -20,4 +20,13 @@ Este es el servidor desarrollado durante las clases del bootcamp de Midudev
  npm init @eslint/config
  ```
  - Creación de Middlewares
- - Deploy Api en Heroku con Heroku CLI
+ - Problemas con Cors
+    ```
+        npm install cors -E
+        app.use(cors())
+    ```
+  * Deploy Api en Heroku con Heroku CLI
+    * Cambiar el puerto del servidor
+    ```
+        heroku create --region eu nombre-app
+    ```

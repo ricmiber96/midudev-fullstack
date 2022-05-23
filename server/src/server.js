@@ -1,8 +1,10 @@
 const express = require('express')
-const logger = require('../../loggerMiddleware')
+const cors = require('cors')
+const logger = require('./loggerMiddleware')
 const app = express()
-const PORT = 5001
+const PORT = process.env.PORT || 5001
 
+app.use(cors())
 app.use(express.json())
 app.use(logger)
 
