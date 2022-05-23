@@ -16,7 +16,7 @@ Este es el servidor desarrollado durante las clases del bootcamp de Midudev
  - Instalacion de Eslint en el proyecto
     ```
     npm install Eslint -D
-    AND
+    &&
     npm init @eslint/config
     ```    
  - Creación de Middlewares
