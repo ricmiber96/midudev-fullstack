@@ -1,33 +1,20 @@
+require('dotenv').config()
+require('./db/database')
 const express = require('express')
 const cors = require('cors')
-const logger = require('./loggerMiddleware')
+const path = require('node:path')
+const logger = require('./middleware/loggerMiddleware')
 const app = express()
-const PORT = process.env.PORT || 5001
+const PORT = process.env.PORT || 5002
+const Note = require('./models/note.model')
+const notFound = require('./middleware/notFound')
+const handleErrors = require('./middleware/handleErrors')
 
 app.use(cors())
 app.use(express.json())
+app.use('./middleware/requestLimit')
+app.use('/images', express.static(path.join(__dirname, '/images')))
 app.use(logger)
-
-let notes = [
-  {
-    id: 1,
-    content: 'Me tengo que suscribir a @midudev en YouTube',
-    date: '2019-05-30T17:30:31.098Z',
-    important: true
-  },
-  {
-    id: 2,
-    content: 'Tengo que estudiar las clases del FullStack Bootcamp',
-    date: '2019-05-30T18:39:34.091Z',
-    important: false
-  },
-  {
-    id: 3,
-    content: 'Repasar los retos de JS de midudev',
-    date: '2019-05-30T19:20:14.298Z',
-    important: true
-  }
-]
 
 // API ROUTES
 app.get('/', (req, res) => {
@@ -35,17 +22,26 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-  res.json(notes)
+  Note.find({})
+    .then(notes => {
+      res.json(notes)
+    })
+    .catch(err => { console.error(err) })
 })
 
-app.get('/api/notes/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const note = notes.find(note => note.id === id)
-  if (note) {
-    res.json(note)
-  } else {
-    res.status(404).end()
-  }
+app.get('/api/notes/:id', (req, res, next) => {
+  const id = req.params.id
+  Note.findById(id)
+    .then(note => {
+      if (note) {
+        return res.json(note)
+      } else {
+        res.status(404).end()
+      }
+    })
+    .catch(err => {
+      next(err)
+    })
 })
 
 app.post('/api/notes', (req, res) => {
@@ -55,32 +51,39 @@ app.post('/api/notes', (req, res) => {
       message: 'Content Note is required'
     })
   }
-  const ids = notes.map(note => note.id)
-  const maxId = Math.max(...ids)
-  const newNote = {
-    id: maxId + 1,
+  const newNote = new Note({
     content: note.content,
-    important: typeof note.important !== 'undefined' ? note.important : false,
-    date: new Date().toISOString()
-  }
-  notes = [...notes, newNote]
-  res.status(200).json(newNote)
-})
-
-app.use((req, res) => {
-  res.status(404).json({
-    error: 'Not Found'
+    date: new Date(),
+    important: note.important || false
   })
+  newNote.save()
+    .then(saveNote => res.json(saveNote))
+    .catch(err => res.status(400).json(err))
 })
 
-app.delete('/api/notes/:id', (req, res) => {
-  const id = Number(req.params.id)
-  notes = notes.filter(note => note.id !== id)
-  if (notes) {
-    res.status(204).end()
-  } else {
-    res.status(404).end()
+app.put('/api/notes/:id', (req, res, next) => {
+  const id = req.params.id
+  const note = req.body
+  const newNoteInfo = {
+    content: note.content,
+    important: note.important
   }
+  Note.findByIdAndUpdate(id, newNoteInfo, { new: true })
+    .then(result => {
+      res.json(result)
+    })
 })
+
+app.delete('/api/notes/:id', (req, res, next) => {
+  const id = req.params.id
+  Note.findByIdAndDelete(id)
+    .then(() => {
+      res.status(204).end()
+    })
+    .catch(err => next(err))
+})
+
+app.use(notFound)
+app.use(handleErrors)
 
 app.listen(PORT, () => { console.log('Server listening on port ' + PORT) })

@@ -15,7 +15,7 @@ Este es el servidor desarrollado durante las clases del bootcamp fullstack de Mi
 [Link Video](https://www.youtube.com/watch?v=ep_plUeKV1Y&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=10)
  - Instalacion de Eslint en el proyecto
     ```
-    npm install Eslint -D
+    npm install eslint -D
     &&
     npm init @eslint/config
     ```    
@@ -70,5 +70,45 @@ Este es el servidor desarrollado durante las clases del bootcamp fullstack de Mi
         }
     })
     ```
-# Aprendiendo Mongoose
+### Mongoose
 [Link Video](https://www.youtube.com/watch?v=vhUw7GkRHdk&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=9)
+ - Instalacion de mongoose en nuestro proyecto
+ - Creacion de Schemas y Modelos con mongoose
+```
+const noteSchema = new mongoose.Schema({
+  content: String,
+  date: Date,
+  important: Boolean
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
+Note.find({})
+  .then(result => {
+    console.log(result)
+    mongoose.connection.close()
+  })
+  .catch(err => console.error(err))
+
+const note = new Note({
+  content: 'MongoDB example',
+  date: new Date(),
+  important: true
+})
+
+note.save()
+  .then(result => {
+    console.log(result)
+    mongoose.connection.close()
+  })
+  .catch(err => { console.error(err) })
+```
+- Quitar el _id y __v de la respuesta JSON en el Note Model
+- Como usar variables de entorno .env (Nota: tienes que crear el archivo en la raiz del proyecto)
+- Conectando la peticion POST a nuestra BD
+- Conectando la peticion GET by ID a nuestra BD
+- Usando middlewares para manejar errores
+- Integrando Sentry.io para manejo de errores
+- Sirviendo estaticos con Express
+- Uso del middleware express-rate-limit para limitar el numero de peticiones por IP
+
