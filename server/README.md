@@ -112,3 +112,31 @@ note.save()
 - Sirviendo estaticos con Express
 - Uso del middleware express-rate-limit para limitar el numero de peticiones por IP
 
+## Cuarta Clase
+### Iniciacion al Testing
+[Link Video](https://www.youtube.com/watch?v=_DzBez4qMi0&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=10)
+- Creando nuestros propios tests runner
+- Ejemplos de framework testing:
+    1. [Mocha](https://mochajs.org/)
+    2. [Ava](https://github.com/avajs/ava)
+    3. [Jest](https://jestjs.io/es-ES/)
+- Instalamos Jest en nuestro proyecto
+```
+npm install jest -D
+```
+- Añadimos la configuracion de Jest a nuestro package.json
+```
+  "jest": {
+    "testEnvironment": "node"
+  }
+```
+- Añadimos en la configuracion de Eslint en nuestro package.json la opcion 'env' 
+```
+"eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json",
+    "env":{
+      "jest": true,
+    }
+}
+```
+### Testing de Backend Con Jest
