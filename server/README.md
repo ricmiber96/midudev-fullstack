@@ -169,4 +169,7 @@ npm i supertest -D
 
 ## Quinta Clase 
 ### Creacion de Usuarios y securizar nuesta BD
+- Creando el model Usuario con Mongoose
+- Relacionar los documentos Usuario y Nota mediante la ID
+- Creando Controller para los endpoints de Usuarios
 

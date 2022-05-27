@@ -9,7 +9,7 @@ const app = express()
 const Note = require('./models/note.model')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
-
+const usersRouter = require('./controllers/users.routes')
 app.use(cors())
 app.use(express.json())
 // app.use(apiLimit)
@@ -20,6 +20,8 @@ app.use(logger)
 app.get('/', (req, res) => {
   res.send('Hello world!')
 })
+
+// app.use('/api/users', usersRouter)
 
 app.get('/api/notes', (req, res) => {
   Note.find({})
