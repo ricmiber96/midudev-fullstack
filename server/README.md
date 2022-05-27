@@ -5,6 +5,7 @@ Este es el servidor desarrollado durante las clases del bootcamp fullstack de Mi
  - [Repositorio NodeJS Server Fullstack Bootcamp](https://github.com/midudev)
 
 # Clases
+
 ## Primera Clase
 [Link Video](https://www.youtube.com/watch?v=o85OkeVtm7k&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=7)
  - Creacion del servidor con NodeJS
@@ -140,3 +141,29 @@ npm install jest -D
 }
 ```
 ### Testing de Backend Con Jest
+[Link Video](https://www.youtube.com/watch?v=_xxVJdGNMrs&list=PLV8x_i1fqBw0Kn_fBIZTa3wS_VZAqddX7&index=12)
+- Usar supertest para hacer testing en express
+```
+npm i supertest -D 
+```
+  - Ejemplo:
+  ```
+  const supertest = require('supertest')
+  const app = require('../server')
+
+  const api = supertest(app)
+
+  test('notes are returned as json', async () => {
+    await api
+      .get('/api/notes')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+  ```
+- Hacer watch de los test con script en el package.json
+- Uso de skip para saltarnos algunos test
+- Evitar Side Effects en los test
+- Ejecutar test segun su nombre o solo ejecutar los test de un fichero
+- Testing POST requests
+- Refactorizando el codigo con helpers  
+### Creacion de Usuarios y securizar nuesta BD

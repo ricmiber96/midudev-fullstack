@@ -4,15 +4,15 @@ const express = require('express')
 const cors = require('cors')
 const path = require('node:path')
 const logger = require('./middleware/loggerMiddleware')
+const apiLimit = require('./middleware/requestLimit')
 const app = express()
-const PORT = process.env.PORT || 5002
 const Note = require('./models/note.model')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 
 app.use(cors())
 app.use(express.json())
-app.use('./middleware/requestLimit')
+// app.use(apiLimit)
 app.use('/images', express.static(path.join(__dirname, '/images')))
 app.use(logger)
 
@@ -86,4 +86,9 @@ app.delete('/api/notes/:id', (req, res, next) => {
 app.use(notFound)
 app.use(handleErrors)
 
-app.listen(PORT, () => { console.log('Server listening on port ' + PORT) })
+const PORT = process.env.PORT || 5001
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
+
+module.exports = { app, server }
