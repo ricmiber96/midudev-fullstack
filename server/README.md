@@ -171,5 +171,14 @@ npm i supertest -D
 ### Creacion de Usuarios y securizar nuesta BD
 - Creando el model Usuario con Mongoose
 - Relacionar los documentos Usuario y Nota mediante la ID
-- Creando Controller para los endpoints de Usuarios
+- Crear Controller y Routes para los endpoints de Users y Notes
+- Encriptar la contraseña del usuario con bcrypt
+- Añadimos test a los endpoints de Users
+### Aplicar TDD a nuestro backend
+- Implementar TDD en nuestro proyecto mediante nuevos test
+- Creacion de campos unicos en nuestra BD con la libreria mongoose-unique-validator 
+### Relaciones entre colecciones con Mongoose. JOIN gracias a la función POPULATE
+- Relacionar una nota al crearla con su usuario mediante la ID
+- Uso de la metodo populate para recuperar la informacion de las notas
+- Mostrar solo el content y el date en la nota, asociada al usuario con populate
 

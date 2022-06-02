@@ -4,15 +4,17 @@ const express = require('express')
 const cors = require('cors')
 const path = require('node:path')
 const logger = require('./middleware/loggerMiddleware')
-const apiLimit = require('./middleware/requestLimit')
+const rateLimit = require('./middleware/requestLimit')
+const userRouter = require('./routes/users.routes')
 const app = express()
+const PORT = process.env.PORT || 5001
 const Note = require('./models/note.model')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
-const usersRouter = require('./controllers/users.routes')
+const User = require('./models/user.model')
+
 app.use(cors())
 app.use(express.json())
-// app.use(apiLimit)
 app.use('/images', express.static(path.join(__dirname, '/images')))
 app.use(logger)
 
@@ -21,10 +23,11 @@ app.get('/', (req, res) => {
   res.send('Hello world!')
 })
 
-// app.use('/api/users', usersRouter)
-
 app.get('/api/notes', (req, res) => {
-  Note.find({})
+  Note.find({}).populate('user', {
+    username: 1,
+    name: 1
+  })
     .then(notes => {
       res.json(notes)
     })
@@ -46,21 +49,33 @@ app.get('/api/notes/:id', (req, res, next) => {
     })
 })
 
-app.post('/api/notes', (req, res) => {
-  const note = req.body
-  if (!note || !note.content) {
+app.post('/api/notes', async (req, res) => {
+  const {
+    content,
+    important = false,
+    userId
+  } = req.body
+
+  const user = await User.findById(userId)
+
+  if (!content) {
     return res.status(400).json({
       message: 'Content Note is required'
     })
   }
   const newNote = new Note({
-    content: note.content,
+    content,
     date: new Date(),
-    important: note.important || false
+    important,
+    user: user._id
   })
+
   newNote.save()
     .then(saveNote => res.json(saveNote))
     .catch(err => res.status(400).json(err))
+
+  user.notes = user.notes.concat(newNote._id)
+  await user.save()
 })
 
 app.put('/api/notes/:id', (req, res, next) => {
@@ -85,12 +100,8 @@ app.delete('/api/notes/:id', (req, res, next) => {
     .catch(err => next(err))
 })
 
+app.use(userRouter)
 app.use(notFound)
 app.use(handleErrors)
 
-const PORT = process.env.PORT || 5001
-const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
-
-module.exports = { app, server }
+app.listen(PORT, () => { console.log('Server listening on port ' + PORT) })

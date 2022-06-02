@@ -88,10 +88,9 @@ describe('GET all notes', () => {
     const { response } = await getAllContentFromNotes()
     expect(response.body).toHaveLength(initialNotes.length)
   })
-})
-afterAll(() => {
-  mongoose.connection.close()
-  server.close()
-})
 
-// afterAll(() => mongoose.disconnect())
+  afterAll(() => {
+    mongoose.connection.close()
+    server.close()
+  })
+})
